@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -8,71 +8,64 @@
 
     <Button
         android:id="@+id/btnConsultar"
-        style="?attr/textAppearanceListItem"
         android:layout_width="227dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="28dp"
         android:layout_marginEnd="168dp"
-        android:text="Consultar Alunos"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Consultar Alunos" />
 
     <Button
         android:id="@+id/btnConsultarRA"
-        style="?attr/textAppearanceListItem"
         android:layout_width="227dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="108dp"
+        android:layout_marginTop="88dp"
         android:layout_marginEnd="168dp"
-        android:text="Consultar Alunos por RA"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Consultar Alunos por RA" />
+
+    <Button
+        android:id="@+id/btnConsultarPorNome"
+        android:layout_width="227dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="148dp"
+        android:layout_marginEnd="168dp"
+        android:text="CONSULTAR ALUNOS POR NOME" />
 
     <Button
         android:id="@+id/btnInserir"
-        style="?attr/textAppearanceListItem"
         android:layout_width="227dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="208dp"
         android:layout_marginEnd="168dp"
-        android:text="Inserir Aluno"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Inserir Aluno" />
 
     <Button
         android:id="@+id/btnAlterar"
-        style="?attr/textAppearanceListItem"
         android:layout_width="227dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="268dp"
         android:layout_marginEnd="168dp"
-        android:text="Alterar Aluno"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Alterar Aluno" />
 
     <Button
         android:id="@+id/btnExcluir"
-        style="?attr/textAppearanceListItem"
         android:layout_width="227dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="348dp"
+        android:layout_marginTop="328dp"
         android:layout_marginEnd="168dp"
-        android:text="Excluir Aluno"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:text="Excluir Aluno" />
 
-</android.support.constraint.ConstraintLayout>
+    <ListView
+        android:id="@+id/lista_tudo"
+        android:layout_width="373dp"
+        android:layout_height="320dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="400dp"
+        android:layout_marginBottom="2dp" />
+
+</RelativeLayout>

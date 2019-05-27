@@ -2,6 +2,7 @@ package aula1.unicamp.br.crud_alunos;
 
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -11,6 +12,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 public class Cliente
 {
@@ -71,42 +73,56 @@ public class Cliente
         }
     }
 
-    public String consulta(String url) throws MalformedURLException, IOException
+    public ArrayList<Aluno> consulta(String url) throws MalformedURLException, IOException
     {
         try
         {
             URL objURL = new URL(url);
-            System.out.println(url);
             HttpURLConnection conexao = (HttpURLConnection) objURL.openConnection();
 
             conexao.setRequestMethod("GET");
-            int responseCode = conexao.getResponseCode();
-
-            System.out.println("Response Code: "+ responseCode);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conexao.getInputStream()));
 
             String inputLine;
-            StringBuilder response = new StringBuilder();
+            String response = new String();
 
             while((inputLine = br.readLine()) != null)
+                response += inputLine; //vai listando os alunos um a um
+
+            ArrayList<Aluno> alunos = new ArrayList<Aluno>();
+
+            try
             {
-                response.append(inputLine); //vai listando os alunos um a um
+                JSONArray json = new JSONArray(response);
+                int i=0;
+
+                while(!(json.isNull(i)))
+                {
+                    Aluno a = new Gson().fromJson(json.get(i).toString(), Aluno.class);
+                    alunos.add(a);
+                    i++;
+                }
+            }
+            catch(Exception e)
+            {
+                JSONObject json = new JSONObject(response);
+                Aluno a = new Gson().fromJson(json.toString(), Aluno.class);
+                alunos.add(a);
             }
 
             br.close();
             conexao.disconnect();
-            return response.toString();
+
+            return alunos;
         }
         catch(Exception e)
         {
-            System.err.println("O aluno não existe!");
+            return null;
         }
-
-        return null;
     }
 
-    public String inclui(String url) throws MalformedURLException, IOException
+    public String inclui(String url, Aluno a) throws MalformedURLException, IOException
     {
         URL objURL = new URL(url);
         HttpURLConnection con = (HttpURLConnection)objURL.openConnection();
@@ -117,25 +133,17 @@ public class Cliente
         con.setRequestProperty("Content-Type", "application/json");
         con.connect();
         aula1.unicamp.br.crud_alunos.Cliente rest = new aula1.unicamp.br.crud_alunos.Cliente();
-        Aluno a;
+
         try
         {
-            a = new Aluno(rest.perguntasRA(), rest.perguntasNome().replace("%20", " "), rest.perguntasEmail());
-
             String saida = new Gson().toJson(a);
 
             OutputStream os = con.getOutputStream();
             os.write(saida.getBytes());
             os.flush();
 
-
             int responseCode = con.getResponseCode();
 
-            //Se retornar 200 significa que deu certo
-
-            System.out.println("Response Code: "+ responseCode);
-
-            //Armazena o retorno do método POST do servidor
             BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
             StringBuffer response = new StringBuffer();
             String inputLine;
@@ -155,7 +163,7 @@ public class Cliente
         return null;
     }
 
-    public String altera(String url) throws MalformedURLException, IOException
+    public String altera(String url, Aluno a) throws MalformedURLException, IOException
     {
         URL objURL = new URL(url);
         HttpURLConnection con = (HttpURLConnection)objURL.openConnection();
@@ -169,11 +177,8 @@ public class Cliente
 
         //Formata em json o item da lista a ser inserido com POST
         JSONObject jsonObj = new JSONObject();
-        Aluno a;
         try
         {
-            a = new Aluno(rest.perguntasRA(), rest.perguntasNome().replace("%20", " "), rest.perguntasEmail());
-
             String saida = new Gson().toJson(a);
 
             //Pega a conexão aberta em con (getOutputStream()) e faz OutputStream, ouseja, faz o fluxo de dados do cliente para o servidor
@@ -209,17 +214,12 @@ public class Cliente
         URL objURL = new URL(url);
         HttpURLConnection con = (HttpURLConnection)objURL.openConnection();
         con.setDoInput(true);
-        con.setDoOutput(true);
         con.setRequestMethod("GET");
         con.setRequestProperty("Content-Type", "application/json");
         con.connect();
 
         try
         {
-            int responseCode = con.getResponseCode();
-
-            System.out.println("Response Code: "+ responseCode);
-
             BufferedReader br = new BufferedReader(new InputStreamReader(con.getInputStream()));
 
             String inputLine;
@@ -227,7 +227,7 @@ public class Cliente
 
             while((inputLine = br.readLine()) != null)
             {
-                response.append(inputLine); //vai listando os alunos um a um
+                response.append(inputLine);
             }
 
             br.close();
@@ -236,7 +236,7 @@ public class Cliente
         }
         catch(Exception e)
         {
-            System.err.println("O aluno não existe!");
+            e.printStackTrace();
         }
 
         return null;

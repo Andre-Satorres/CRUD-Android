@@ -40,6 +40,6 @@
         android:layout_marginStart="60dp"
         android:layout_marginTop="145dp"
         android:padding="10sp"
-        android:text="Consultar"
+        android:text="Excluir Aluno"
         android:textSize="20dp" />
 </RelativeLayout>
