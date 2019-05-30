@@ -25,7 +25,7 @@ public class insere_nome extends AppCompatActivity
         int width = dm.widthPixels;
         int height= dm.heightPixels;
 
-        getWindow().setLayout((int)(width *0.8), (int)(height*.6));
+        getWindow().setLayout((int)(width *0.8), (int)(height*.45));
 
         btnConsultar = findViewById(R.id.btnEnvRa);
         tv_nome = findViewById(R.id.tv_nome);

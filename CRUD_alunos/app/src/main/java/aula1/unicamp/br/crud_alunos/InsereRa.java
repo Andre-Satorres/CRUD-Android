@@ -25,7 +25,7 @@ public class InsereRa extends Activity
         int width = dm.widthPixels;
         int height= dm.heightPixels;
 
-        getWindow().setLayout((int)(width *0.8), (int)(height*.6));
+        getWindow().setLayout((int)(width *0.8), (int)(height*.35));
 
         btnConsultar = findViewById(R.id.btnEnvRa);
         tv_ra = findViewById(R.id.tv_ra);

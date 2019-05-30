@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     Cliente clienteRest = new Cliente();
     ListView lvAlunos;
     ListaTudoAdapter alunosAdapter;
+    TextView tvAlunos;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -47,6 +49,11 @@ public class MainActivity extends AppCompatActivity
         Button btnAlterar = findViewById(R.id.btnAlterar);
         Button btnExcluir = findViewById(R.id.btnExcluir);
         lvAlunos = findViewById(R.id.lista_tudo);
+        tvAlunos = findViewById(R.id.tvAlunos);
+
+        tvAlunos.setVisibility(View.INVISIBLE);
+        lvAlunos.setVisibility(View.INVISIBLE);
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP)
         {
             lvAlunos.setNestedScrollingEnabled(true);
@@ -61,8 +68,8 @@ public class MainActivity extends AppCompatActivity
             {
                 try
                 {
-
                     buscarDados("http://10.0.2.2:8080/EscolaApp/webresources/generic/consultarTodos", "ConsultarTodos", null, null, null);
+
                 } catch (Exception e)
                 {
                     e.printStackTrace();
@@ -77,9 +84,12 @@ public class MainActivity extends AppCompatActivity
             {
                 try
                 {
-                    Intent i = new Intent(MainActivity.this, InsereRa.class);
-                    startActivityForResult(i, 1);
+                    lvAlunos.setVisibility(View.INVISIBLE);
+                    tvAlunos.setVisibility(View.INVISIBLE);
 
+                    Intent i = new Intent(MainActivity.this, InsereRa.class);
+
+                    startActivityForResult(i, 1);
                 }
                 catch (Exception e)
                 {
@@ -95,9 +105,11 @@ public class MainActivity extends AppCompatActivity
             {
                 try
                 {
+                    lvAlunos.setVisibility(View.INVISIBLE);
+                    tvAlunos.setVisibility(View.INVISIBLE);
+
                     Intent i = new Intent(MainActivity.this, insere_nome.class);
                     startActivityForResult(i, 2);
-
                 }
                 catch (Exception e)
                 {
@@ -113,9 +125,11 @@ public class MainActivity extends AppCompatActivity
             {
                 try
                 {
+                    lvAlunos.setVisibility(View.INVISIBLE);
+                    tvAlunos.setVisibility(View.INVISIBLE);
+
                     Intent i = new Intent(MainActivity.this, insereTudo.class);
                     startActivityForResult(i, 3);
-
                 } catch (Exception e)
                 {
                     e.printStackTrace();
@@ -130,6 +144,9 @@ public class MainActivity extends AppCompatActivity
             {
                 try
                 {
+                    lvAlunos.setVisibility(View.INVISIBLE);
+                    tvAlunos.setVisibility(View.INVISIBLE);
+
                     Intent i = new Intent(MainActivity.this, inserir_alterar.class);
                     startActivityForResult(i, 4);
                 } catch (Exception e)
@@ -144,7 +161,11 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View v)
             {
-                try {
+                try
+                {
+                    lvAlunos.setVisibility(View.INVISIBLE);
+                    tvAlunos.setVisibility(View.INVISIBLE);
+
                     Intent i = new Intent(MainActivity.this, Excluir.class);
                     startActivityForResult(i, 5);
                 } catch (Exception e) {
@@ -165,10 +186,6 @@ public class MainActivity extends AppCompatActivity
                 String ra = data.getStringExtra("ra");
                 buscarDados("http://10.0.2.2:8080/EscolaApp/webresources/generic/consultaPeloRA/" + ra, "ConsultarPorRA", null, null, null);
             }
-            if (resultCode == Activity.RESULT_CANCELED)
-            {
-                Toast.makeText(getApplicationContext(), "ERRO INESPERADO...", Toast.LENGTH_SHORT).show();
-            }
         }
         else
         if(requestCode == 2)
@@ -177,10 +194,6 @@ public class MainActivity extends AppCompatActivity
             {
                 String nome = data.getStringExtra("nome").replace(" ", "%20");;
                 buscarDados("http://10.0.2.2:8080/EscolaApp/webresources/generic/consultaPeloNome/" + nome, "ConsultarPorNome", null, null, null);
-            }
-            if (resultCode == Activity.RESULT_CANCELED)
-            {
-                Toast.makeText(getApplicationContext(), "ERRO INESPERADO...", Toast.LENGTH_SHORT).show();
             }
         }
         else
@@ -193,10 +206,6 @@ public class MainActivity extends AppCompatActivity
                 String email = data.getStringExtra("email");
                 buscarDados("http://10.0.2.2:8080/EscolaApp/webresources/generic/incluirAluno/", "Incluir", ra, nome, email);
             }
-            if (resultCode == Activity.RESULT_CANCELED)
-            {
-                Toast.makeText(getApplicationContext(), "ERRO INESPERADO...", Toast.LENGTH_SHORT).show();
-            }
         }
         else
         if(requestCode == 4)
@@ -208,10 +217,6 @@ public class MainActivity extends AppCompatActivity
                 String email = data.getStringExtra("email");
                 buscarDados("http://10.0.2.2:8080/EscolaApp/webresources/generic/alterarAluno/", "Alterar", ra, nome, email);
             }
-            if (resultCode == Activity.RESULT_CANCELED)
-            {
-                Toast.makeText(getApplicationContext(), "ERRO INESPERADO...", Toast.LENGTH_SHORT).show();
-            }
         }
         if(requestCode == 5)
         {
@@ -219,10 +224,6 @@ public class MainActivity extends AppCompatActivity
             {
                 String ra = data.getStringExtra("ra");
                 buscarDados("http://10.0.2.2:8080/EscolaApp/webresources/generic/excluirAluno/" + ra, "Excluir", ra, null, null);
-            }
-            if (resultCode == Activity.RESULT_CANCELED)
-            {
-                Toast.makeText(getApplicationContext(), "ERRO INESPERADO...", Toast.LENGTH_SHORT).show();
             }
         }
     }//onActivityResult
@@ -241,12 +242,23 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void run()
             {
-                alunosAdapter.clear();
 
-                for(Aluno a: alunos)
-                    alunosAdapter.add(a);
+                try {
+                    alunosAdapter.clear();
 
-                lvAlunos.setAdapter(alunosAdapter);
+                    for (Aluno a : alunos)
+                        alunosAdapter.add(a);
+
+                    lvAlunos.setAdapter(alunosAdapter);
+                    lvAlunos.setVisibility(View.VISIBLE);
+                    tvAlunos.setVisibility(View.VISIBLE);
+                }
+                catch(Exception e)
+                {
+                    Toast.makeText(getApplicationContext(), "Nenhum resultado encontrado...", Toast.LENGTH_SHORT).show();
+                    tvAlunos.setVisibility(View.INVISIBLE);
+                    lvAlunos.setVisibility(View.INVISIBLE);
+                }
             }
         });
     }
@@ -288,20 +300,12 @@ public class MainActivity extends AppCompatActivity
             return "a";
         }
 
-        /*
-        @Override
-        protected void onProgressUpdate(String... values)
-        {
-            super.onProgressUpdate(values);
-            atualizarView(values[0]);
-        }*/
-
         @Override
         protected void onPostExecute(String s)
         {
             super.onPostExecute(s);
             if(s.equals("e"))
-                Toast.makeText(getApplicationContext(), "Algo deu errado durante a execução!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Dados inseridos inválidos...", Toast.LENGTH_SHORT).show();
         }
     }
 }

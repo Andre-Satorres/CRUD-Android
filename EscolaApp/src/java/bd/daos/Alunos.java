@@ -222,7 +222,7 @@ public class Alunos
             String sql;
 
             sql = "SELECT * " +
-                  "FROM aluno_3";
+                  "FROM aluno_3 order by ra";
 
             BDSQLServer.COMANDO.prepareStatement (sql);
 

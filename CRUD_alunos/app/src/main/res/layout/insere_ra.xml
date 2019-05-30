@@ -16,6 +16,7 @@
         android:layout_marginTop="30dp"
         android:padding="10sp"
         android:text="Insira o RA desejado"
+        android:textColor="#000000"
         android:textSize="20dp" />
 
     <EditText
