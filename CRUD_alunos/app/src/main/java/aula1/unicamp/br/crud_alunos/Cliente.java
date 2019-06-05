@@ -16,63 +16,6 @@ import java.util.ArrayList;
 
 public class Cliente
 {
-    public String perguntasRA()
-    {
-        BufferedReader leitor = new BufferedReader(new InputStreamReader(System.in));
-        for(;;)
-        {
-            System.out.println("");
-            System.out.print("Digite o RA desejado: ");
-
-            try
-            {
-                String ret = leitor.readLine();
-                Integer.parseInt(ret);
-
-                if(ret.length() != 5)
-                    throw new Exception();
-
-                return ret.trim();
-            }
-            catch(Exception e)
-            {
-                System.err.println("RA inválido! Redigite...");
-            }
-        }
-    }
-
-    public String perguntasNome()
-    {
-        BufferedReader leitor = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("");
-        System.out.print("Digite o nome desejado: ");
-
-        try
-        {
-            return leitor.readLine().replace(" ", "%20");
-        }
-        catch(Exception e)
-        {
-            return null;
-        }
-    }
-
-    public String perguntasEmail()
-    {
-        BufferedReader leitor = new BufferedReader(new InputStreamReader(System.in));
-        System.out.println("");
-        System.out.print("Digite o email desejado: ");
-
-        try
-        {
-            return leitor.readLine().trim();
-        }
-        catch(Exception e)
-        {
-            return null;
-        }
-    }
-
     public ArrayList<Aluno> consulta(String url) throws MalformedURLException, IOException
     {
         try

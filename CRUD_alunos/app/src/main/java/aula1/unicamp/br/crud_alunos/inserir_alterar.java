@@ -32,6 +32,17 @@ public class inserir_alterar extends AppCompatActivity
         tv_nome = findViewById(R.id.tv_nomeIns);
         tv_email = findViewById(R.id.tv_emailIns);
 
+        Bundle b = getIntent().getExtras();
+        String ra = b.getString("ra");
+        String nome = b.getString("nome");
+        String email = b.getString("email");
+
+        tv_ra.setText(ra);
+        tv_nome.setText(nome);
+        tv_email.setText(email);
+
+        tv_ra.setEnabled(false);
+
         btnAlterar.setOnClickListener(new View.OnClickListener()
         {
             @Override

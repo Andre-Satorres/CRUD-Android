@@ -29,7 +29,6 @@ import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity
 {
-    private Context mContext;
     Cliente clienteRest = new Cliente();
     ListView lvAlunos;
     ListaTudoAdapter alunosAdapter;
@@ -39,8 +38,6 @@ public class MainActivity extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mContext = getApplicationContext();
 
         Button btnConsultar = findViewById(R.id.btnConsultar);
         Button btnConsultarPorRa = findViewById(R.id.btnConsultarRA);
@@ -147,7 +144,8 @@ public class MainActivity extends AppCompatActivity
                     lvAlunos.setVisibility(View.INVISIBLE);
                     tvAlunos.setVisibility(View.INVISIBLE);
 
-                    Intent i = new Intent(MainActivity.this, inserir_alterar.class);
+                   // Intent i = new Intent(MainActivity.this, inserir_alterar.class);
+                    Intent i = new Intent(MainActivity.this, InsereRa.class);
                     startActivityForResult(i, 4);
                 } catch (Exception e)
                 {
@@ -210,20 +208,39 @@ public class MainActivity extends AppCompatActivity
         else
         if(requestCode == 4)
         {
-            if(resultCode == Activity.RESULT_OK)
-            {
-                String ra = data.getStringExtra("ra");
-                String nome = data.getStringExtra("nome");
-                String email = data.getStringExtra("email");
-                buscarDados("http://10.0.2.2:8080/EscolaApp/webresources/generic/alterarAluno/", "Alterar", ra, nome, email);
+            try {
+                if (resultCode == Activity.RESULT_OK) {
+                    String ra = data.getStringExtra("ra");
+
+                    Intent i = new Intent(MainActivity.this, inserir_alterar.class);
+                    Bundle b = new Bundle();
+                    b.putString("ra", ra);
+
+                    i.putExtras(b);
+                    startActivityForResult(i, 6);
+                }
             }
+            catch(Exception e)
+            {}
         }
+        else
         if(requestCode == 5)
         {
             if(resultCode == Activity.RESULT_OK)
             {
                 String ra = data.getStringExtra("ra");
                 buscarDados("http://10.0.2.2:8080/EscolaApp/webresources/generic/excluirAluno/" + ra, "Excluir", ra, null, null);
+            }
+        }
+        else
+        if(requestCode == 6)
+        {
+            if(resultCode == Activity.RESULT_OK)
+            {
+                String ra = data.getStringExtra("ra");
+                String nome = data.getStringExtra("nome");
+                String email = data.getStringExtra("email");
+                buscarDados("http://10.0.2.2:8080/EscolaApp/webresources/generic/alterarAluno/", "Alterar", ra, nome, email);
             }
         }
     }//onActivityResult
@@ -275,7 +292,7 @@ public class MainActivity extends AppCompatActivity
         });
     }
 
-    private  class MinhaAsyncTask extends AsyncTask<String,String,String>
+    private class MinhaAsyncTask extends AsyncTask<String,String,String>
     {
         @Override
         protected String doInBackground(String... parametros)

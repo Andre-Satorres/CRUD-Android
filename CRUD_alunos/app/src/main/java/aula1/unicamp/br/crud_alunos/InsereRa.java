@@ -37,7 +37,7 @@ public class InsereRa extends Activity
             {
                 Intent returnIntent = new Intent();
                 returnIntent.putExtra("ra", tv_ra.getText().toString().trim());
-                setResult(Activity.RESULT_OK,returnIntent);
+                setResult(Activity.RESULT_OK, returnIntent);
                 finish();
             }
         });
