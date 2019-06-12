@@ -20,6 +20,8 @@
         android:shadowDy="500"
         android:text="RA"
         android:textIsSelectable="true"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -35,6 +37,7 @@
         android:inputType="none"
         android:text="Nome"
         android:textIsSelectable="true"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

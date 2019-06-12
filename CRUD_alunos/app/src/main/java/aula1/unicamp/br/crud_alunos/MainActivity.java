@@ -237,6 +237,7 @@ public class MainActivity extends AppCompatActivity
         {
             if(resultCode == Activity.RESULT_OK)
             {
+
                 String ra = data.getStringExtra("ra");
                 String nome = data.getStringExtra("nome");
                 String email = data.getStringExtra("email");
